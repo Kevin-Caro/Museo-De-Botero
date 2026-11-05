@@ -1,17 +1,187 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#182c29"><title>Más allá de Botero · Galería experimental</title><link rel="stylesheet" href="estilos.css"><script src="script.js" defer></script></head>
-<body><a class="skip" href="#contenido">Saltar al contenido</a><div id="progreso" aria-hidden="true"></div>
-<header><a class="marca" href="#inicio">M<span>↗</span>B <small>Más allá de Botero</small></a><button id="menu" aria-expanded="false" aria-controls="nav">Menú ☰</button><nav id="nav" aria-label="Principal"><a href="#proyecto">Proyecto</a><a href="#galeria">Galería</a><a href="#trayectoria">Trayectoria</a><a href="#debate">Debate</a><a href="#semana">Semana 01</a></nav></header>
-<main id="contenido"><section class="hero" id="inicio"><div class="hero-copy"><p class="eyebrow">ARTE · MEMORIA · PREGUNTAS</p><h1>Más allá<br>del <em>volumen.</em></h1><p class="lead">Una mirada a Fernando Botero entre la forma, la memoria y el debate.</p><p class="muted">Más allá de Botero · Prototipo de la primera semana</p><div class="acciones"><a class="btn" href="#galeria">Explorar el recorrido ↗</a><button class="btn secundario" id="heroAudio">♫ Entrar con sonido</button></div></div><div class="poster" aria-label="Composición abstracta decorativa; no reproduce una obra de Botero"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><span class="poster-top">ESTUDIO DE FORMA / 001</span><span class="poster-bottom">La forma es solo<br>el comienzo.</span><span class="sello">MÁS ALLÁ<br>DE BOTERO</span></div><div class="hero-footer"><span>15 obras por investigar</span><span>01 recorrido digital</span><a href="#proyecto">Desliza para descubrir ↓</a></div></section>
-<div class="cinta" aria-hidden="true">FORMA / CONTEXTO / MEMORIA / EXPRESIÓN / FORMA / CONTEXTO / MEMORIA / EXPRESIÓN</div>
-<section id="proyecto" class="reveal"><div class="cabecera"><p class="eyebrow">01 / EL PROYECTO</p><h2>No solo mirar.<br><em>Aprender a preguntar.</em></h2></div><div class="intro-grid"><p class="lead">Un recorrido propuesto por diez obras del Museo Botero y cinco obras externas o casos de debate, acompañado de imágenes, investigación y música.</p><div><p>Esta primera entrega presenta la estructura y la experiencia visual. Las fichas de la galería son espacios de trabajo: no son un catálogo verificado.</p><p class="aviso">Las formas abstractas son ilustraciones del prototipo, no reproducciones de obras del artista.</p></div></div><div class="pilares"><article><span>01</span><h3>Mirar</h3><p>Observar técnica, composición y volumen.</p></article><article><span>02</span><h3>Comprender</h3><p>Relacionar cada obra con su contexto.</p></article><article><span>03</span><h3>Cuestionar</h3><p>Abrir preguntas sobre memoria y expresión.</p></article></div></section>
-<section id="galeria" class="reveal"><div class="cabecera"><p class="eyebrow">02 / GALERÍA EN CONSTRUCCIÓN</p><h2>Quince entradas.<br><em>Muchas preguntas.</em></h2><p>Explora las fichas para conocer qué falta investigar en cada una.</p></div><div class="herramientas"><div class="filtros" role="group" aria-label="Filtrar galería"><button class="activo" data-filter="todos" aria-pressed="true">Todas · 15</button><button data-filter="museo" aria-pressed="false">Museo · 10</button><button data-filter="debate" aria-pressed="false">Fuera del museo · 5</button></div><label class="buscar">⌕ <input id="busqueda" type="search" placeholder="Buscar ficha…" aria-label="Buscar ficha"></label></div><p id="resultados" class="muted" aria-live="polite"></p><div id="obras" class="obras"></div></section>
-<section id="trayectoria" class="oscuro reveal"><p class="eyebrow">03 / MAPA DE INVESTIGACIÓN</p><h2>Un estilo no aparece<br><em>de un día para otro.</em></h2><p>Estos son ejes del guion, no una periodización histórica confirmada. Selecciona uno para explorar las preguntas.</p><div class="etapas" role="group" aria-label="Ejes de investigación"><button data-etapa="0" aria-pressed="true" class="activo">01 · Influencias</button><button data-etapa="1" aria-pressed="false">02 · Lenguaje visual</button><button data-etapa="2" aria-pressed="false">03 · Museo</button><button data-etapa="3" aria-pressed="false">04 · Memoria</button></div><article id="etapaTexto" class="etapa" aria-live="polite"></article></section>
-<section id="debate" class="reveal"><p class="eyebrow">04 / EL ARTE TAMBIÉN INCOMODA</p><h2>¿Representar es<br><em>justificar?</em></h2><p class="ancho">Preguntas de trabajo para investigar los casos sugeridos en la propuesta. No se presupone que hayan sido censurados.</p><div class="debates"><details open><summary>Abu Ghraib <span>↗</span></summary><p>Investigar obras concretas de la serie, su contexto, las exposiciones y las reacciones documentadas. ¿Cómo se construye una denuncia visual?</p></details><details><summary>El Pájaro y la memoria <span>↗</span></summary><p>Verificar la historia de la escultura, el atentado y su transformación como lugar de memoria. ¿Cómo cambia el significado de una obra en el espacio público?</p></details><details><summary>Violencia en Colombia <span>↗</span></summary><p>Identificar títulos y fuentes de obras relacionadas con la violencia. ¿Qué evidencias permiten distinguir una representación crítica de una glorificación?</p></details></div></section>
-<section id="sonido" class="sonido reveal"><div><p class="eyebrow">05 / PAISAJE SONORO</p><h2>Otra forma<br>de <em>recorrer.</em></h2><p>Prueba el ambiente instrumental generado para este prototipo o carga un archivo de audio de tu equipo. La música definitiva y sus permisos quedan pendientes.</p><button id="soundMain" class="btn">▶ Escuchar ambiente</button><label class="btn secundario archivo">Cargar mi audio<input type="file" id="archivoAudio" accept="audio/*"></label><p id="archivoNombre" class="muted">Sin canciones externas incluidas.</p><button id="volverAmbiente" class="linkbtn" hidden>Volver al ambiente generado</button></div><div class="visualizador" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></section>
-<section id="semana" class="reveal"><p class="eyebrow">06 / PRIMERA ENTREGA</p><h2>La idea toma <em>forma.</em></h2><p>Marca los entregables completados. El avance se conserva en este navegador cuando su almacenamiento está disponible.</p><div class="avance"><span id="avanceTexto">0 de 6 tareas</span><progress id="avance" max="6" value="0">0 de 6</progress></div><div id="tareas" class="tareas"></div></section>
-<section id="equipo" class="reveal"><p class="eyebrow">07 / EQUIPO</p><h2>Cuatro miradas.<br><em>Una historia.</em></h2><div class="equipo"><article><span>01 / GUION</span><h3>Manuela<br>Gutiérrez</h3></article><article><span>02 / IMÁGENES</span><h3>Daniel<br>Duque</h3></article><article><span>03 / MÚSICA</span><h3>Jacobo<br>Parada</h3></article><article><span>04 / PROGRAMACIÓN</span><h3>Kevin<br>Caro</h3></article></div></section>
-<section id="fuentes" class="fuentes reveal"><p class="eyebrow">08 / FUENTES Y CRÉDITOS</p><h2>Investigar también es <em>citar.</em></h2><p>Documento base: «Propuesta · Trabajo final: Más allá de Botero», equipo del proyecto, 4 páginas.</p><p>Por completar: fuentes de cada obra, referencias biográficas, procedencia de imágenes, permisos y fichas musicales. Los dibujos abstractos son recursos gráficos del prototipo. El ambiente sonoro se sintetiza mediante código y no utiliza grabaciones de terceros.</p></section></main>
-<footer><a class="marca" href="#inicio">Más allá de Botero ↗</a><p>Prototipo académico · Semana 01 · Contenido en investigación</p></footer>
-<aside class="player" aria-label="Reproductor de música"><button id="play" aria-label="Reproducir ambiente">▶</button><div><span id="estadoAudio" role="status">Sonido desactivado</span><small id="tipoAudio">Ambiente instrumental de prueba</small></div><label>Volumen<input id="volumen" type="range" min="0" max="1" step="0.01" value="0.35"></label></aside><audio id="audio" loop></audio>
-<dialog id="ficha"><button id="cerrar" class="cerrar" aria-label="Cerrar ficha">✕</button><div id="fichaContenido"></div></dialog></body></html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#182c29">
+    <title>Más allá de Botero · Galería experimental</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body><a class="skip" href="#contenido">Saltar al contenido</a>
+    <div id="progreso" aria-hidden="true"></div>
+    <header><a class="marca" href="#inicio">M<span>↗</span>B <small>Más allá de Botero</small></a><button id="menu"
+            aria-expanded="false" aria-controls="nav">Menú ☰</button>
+        <nav id="nav" aria-label="Principal"><a href="#proyecto">Proyecto</a><a href="#galeria">Galería</a><a
+                href="#trayectoria">Trayectoria</a><a href="#debate">Debate</a><a href="#semana">Semana 01</a></nav>
+    </header>
+    <main id="contenido">
+        <section class="hero" id="inicio">
+            <div class="hero-copy">
+                <p class="eyebrow">ARTE · MEMORIA · PREGUNTAS</p>
+                <h1>Más allá<br>del <em>volumen.</em></h1>
+                <p class="lead">Una mirada a Fernando Botero entre la forma, la memoria y el debate.</p>
+                <p class="muted">Más allá de Botero · Prototipo de la primera semana</p>
+                <div class="acciones"><a class="btn" href="#galeria">Explorar el recorrido ↗</a><button
+                        class="btn secundario" id="heroAudio">♫ Entrar con sonido</button></div>
+            </div>
+            <div class="poster" aria-label="Composición abstracta decorativa; no reproduce una obra de Botero">
+                <div class="orb o1"></div>
+                <div class="orb o2"></div>
+                <div class="orb o3"></div><span class="poster-top">ESTUDIO DE FORMA / 001</span><span
+                    class="poster-bottom">La forma es solo<br>el comienzo.</span><span class="sello">MÁS ALLÁ<br>DE
+                    BOTERO</span>
+            </div>
+            <div class="hero-footer"><span>15 obras por investigar</span><span>01 recorrido digital</span><a
+                    href="#proyecto">Desliza para descubrir ↓</a></div>
+        </section>
+        <div class="cinta" aria-hidden="true">FORMA / CONTEXTO / MEMORIA / EXPRESIÓN / FORMA / CONTEXTO / MEMORIA /
+            EXPRESIÓN</div>
+        <section id="proyecto" class="reveal">
+            <div class="cabecera">
+                <p class="eyebrow">01 / EL PROYECTO</p>
+                <h2>No solo mirar.<br><em>Aprender a preguntar.</em></h2>
+            </div>
+            <div class="intro-grid">
+                <p class="lead">Un recorrido propuesto por diez obras del Museo Botero y cinco obras externas o casos de
+                    debate, acompañado de imágenes, investigación y música.</p>
+                <div>
+                    <p>Esta primera entrega presenta la estructura y la experiencia visual. Las fichas de la galería son
+                        espacios de trabajo: no son un catálogo verificado.</p>
+                    <p class="aviso">Las formas abstractas son ilustraciones del prototipo, no reproducciones de obras
+                        del artista.</p>
+                </div>
+            </div>
+            <div class="pilares">
+                <article><span>01</span>
+                    <h3>Mirar</h3>
+                    <p>Observar técnica, composición y volumen.</p>
+                </article>
+                <article><span>02</span>
+                    <h3>Comprender</h3>
+                    <p>Relacionar cada obra con su contexto.</p>
+                </article>
+                <article><span>03</span>
+                    <h3>Cuestionar</h3>
+                    <p>Abrir preguntas sobre memoria y expresión.</p>
+                </article>
+            </div>
+        </section>
+        <section id="galeria" class="reveal">
+            <div class="cabecera">
+                <p class="eyebrow">02 / GALERÍA EN CONSTRUCCIÓN</p>
+                <h2>Quince entradas.<br><em>Muchas preguntas.</em></h2>
+                <p>Explora las fichas para conocer qué falta investigar en cada una.</p>
+            </div>
+            <div class="herramientas">
+                <div class="filtros" role="group" aria-label="Filtrar galería"><button class="activo"
+                        data-filter="todos" aria-pressed="true">Todas · 15</button><button data-filter="museo"
+                        aria-pressed="false">Museo · 10</button><button data-filter="debate" aria-pressed="false">Fuera
+                        del museo · 5</button></div><label class="buscar">⌕ <input id="busqueda" type="search"
+                        placeholder="Buscar ficha…" aria-label="Buscar ficha"></label>
+            </div>
+            <p id="resultados" class="muted" aria-live="polite"></p>
+            <div id="obras" class="obras"></div>
+        </section>
+        <section id="trayectoria" class="oscuro reveal">
+            <p class="eyebrow">03 / MAPA DE INVESTIGACIÓN</p>
+            <h2>Un estilo no aparece<br><em>de un día para otro.</em></h2>
+            <p>Estos son ejes del guion, no una periodización histórica confirmada. Selecciona uno para explorar las
+                preguntas.</p>
+            <div class="etapas" role="group" aria-label="Ejes de investigación"><button data-etapa="0"
+                    aria-pressed="true" class="activo">01 · Influencias</button><button data-etapa="1"
+                    aria-pressed="false">02 · Lenguaje visual</button><button data-etapa="2" aria-pressed="false">03 ·
+                    Museo</button><button data-etapa="3" aria-pressed="false">04 · Memoria</button></div>
+            <article id="etapaTexto" class="etapa" aria-live="polite"></article>
+        </section>
+        <section id="debate" class="reveal">
+            <p class="eyebrow">04 / EL ARTE TAMBIÉN INCOMODA</p>
+            <h2>¿Representar es<br><em>justificar?</em></h2>
+            <p class="ancho">Preguntas de trabajo para investigar los casos sugeridos en la propuesta. No se presupone
+                que hayan sido censurados.</p>
+            <div class="debates">
+                <details open>
+                    <summary>Abu Ghraib <span>↗</span></summary>
+                    <p>Investigar obras concretas de la serie, su contexto, las exposiciones y las reacciones
+                        documentadas. ¿Cómo se construye una denuncia visual?</p>
+                </details>
+                <details>
+                    <summary>El Pájaro y la memoria <span>↗</span></summary>
+                    <p>Verificar la historia de la escultura, el atentado y su transformación como lugar de memoria.
+                        ¿Cómo cambia el significado de una obra en el espacio público?</p>
+                </details>
+                <details>
+                    <summary>Violencia en Colombia <span>↗</span></summary>
+                    <p>Identificar títulos y fuentes de obras relacionadas con la violencia. ¿Qué evidencias permiten
+                        distinguir una representación crítica de una glorificación?</p>
+                </details>
+            </div>
+        </section>
+        <section id="sonido" class="sonido reveal">
+            <div>
+                <p class="eyebrow">05 / PAISAJE SONORO</p>
+                <h2>Otra forma<br>de <em>recorrer.</em></h2>
+                <p>Prueba el ambiente instrumental generado para este prototipo o carga un archivo de audio de tu
+                    equipo. La música definitiva y sus permisos quedan pendientes.</p><button id="soundMain"
+                    class="btn">▶ Escuchar ambiente</button><label class="btn secundario archivo">Cargar mi audio<input
+                        type="file" id="archivoAudio" accept="audio/*"></label>
+                <p id="archivoNombre" class="muted">Sin canciones externas incluidas.</p><button id="volverAmbiente"
+                    class="linkbtn" hidden>Volver al ambiente generado</button>
+            </div>
+            <div class="visualizador" aria-hidden="true">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+        </section>
+        <section id="semana" class="reveal">
+            <p class="eyebrow">06 / PRIMERA ENTREGA</p>
+            <h2>La idea toma <em>forma.</em></h2>
+            <p>Marca los entregables completados. El avance se conserva en este navegador cuando su almacenamiento está
+                disponible.</p>
+            <div class="avance"><span id="avanceTexto">0 de 6 tareas</span><progress id="avance" max="6" value="0">0 de
+                    6</progress></div>
+            <div id="tareas" class="tareas"></div>
+        </section>
+        <section id="equipo" class="reveal">
+            <p class="eyebrow">07 / EQUIPO</p>
+            <h2>Cuatro miradas.<br><em>Una historia.</em></h2>
+            <div class="equipo">
+                <article><span>01 / GUION</span>
+                    <h3>Manuela<br>Gutiérrez</h3>
+                </article>
+                <article><span>02 / IMÁGENES</span>
+                    <h3>Daniel<br>Duque</h3>
+                </article>
+                <article><span>03 / MÚSICA</span>
+                    <h3>Jacobo<br>Parada</h3>
+                </article>
+                <article><span>04 / PROGRAMACIÓN</span>
+                    <h3>Kevin<br>Caro</h3>
+                </article>
+            </div>
+        </section>
+        <section id="fuentes" class="fuentes reveal">
+            <p class="eyebrow">08 / FUENTES Y CRÉDITOS</p>
+            <h2>Investigar también es <em>citar.</em></h2>
+            <p>Documento base: «Propuesta · Trabajo final: Más allá de Botero», equipo del proyecto, 4 páginas.</p>
+            <p>Por completar: fuentes de cada obra, referencias biográficas, procedencia de imágenes, permisos y fichas
+                musicales. Los dibujos abstractos son recursos gráficos del prototipo. El ambiente sonoro se sintetiza
+                mediante código y no utiliza grabaciones de terceros.</p>
+        </section>
+    </main>
+    <footer><a class="marca" href="#inicio">Más allá de Botero ↗</a>
+        <p>Prototipo académico · Semana 01 · Contenido en investigación</p>
+    </footer>
+    <aside class="player" aria-label="Reproductor de música"><button id="play"
+            aria-label="Reproducir ambiente">▶</button>
+        <div><span id="estadoAudio" role="status">Sonido desactivado</span><small id="tipoAudio">Ambiente instrumental
+                de prueba</small></div><label>Volumen<input id="volumen" type="range" min="0" max="1" step="0.01"
+                value="0.35"></label>
+    </aside><audio id="audio" loop></audio>
+    <dialog id="ficha"><button id="cerrar" class="cerrar" aria-label="Cerrar ficha">✕</button>
+        <div id="fichaContenido"></div>
+    </dialog>
+</body>
+
+</html>
