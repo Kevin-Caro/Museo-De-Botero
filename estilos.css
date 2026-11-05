@@ -1,10 +1,10 @@
 :root {
-    --fondo: #f4f0e7;
-    --tinta: #182c29;
-    --verde: #31594b;
-    --rojo: #b94f35;
-    --borde: #d8d5ca;
-    --muted: #5c655e
+    --fondo: #f4eedd;
+    --tinta: #2a1f1b;
+    --verde: #3d6a54;
+    --rojo: #c4452d;
+    --borde: #dccfb9;
+    --muted: #7a6e60;
 }
 
 * {
@@ -69,13 +69,13 @@ h1,
 h2,
 h3 {
     font-family: Georgia, serif;
-    font-weight: 400;
-    line-height: 1.06
+    font-weight: 700; /* Mayor peso tipográfico */
+    line-height: 1.05
 }
 
 h1 {
-    font-size: clamp(4rem, 8vw, 8.8rem);
-    letter-spacing: -.065em;
+    font-size: clamp(4.5rem, 9vw, 9.5rem);
+    letter-spacing: -.05em;
     margin-bottom: 24px
 }
 
@@ -90,7 +90,7 @@ h3 {
 }
 
 em {
-    font-weight: 400;
+    font-weight: 700;
     color: var(--rojo)
 }
 
@@ -103,8 +103,11 @@ header {
     justify-content: space-between;
     padding: 20px 5%;
     border-bottom: 1px solid var(--borde);
-    background: #f4f0e7f2;
-    backdrop-filter: blur(14px)
+    background: #f4eeddf2;
+    backdrop-filter: blur(14px);
+    border-bottom-left-radius: 30px; /* Redondeo voluminoso */
+    border-bottom-right-radius: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04)
 }
 
 .marca {
@@ -119,7 +122,8 @@ header {
 
 .marca small {
     font: 12px Arial, sans-serif;
-    margin-left: 14px
+    margin-left: 14px;
+    font-weight: normal;
 }
 
 nav {
@@ -202,26 +206,30 @@ section {
     margin-top: 28px
 }
 
+/* Botones inflados y elásticos */
 .btn {
-    border: 1px solid var(--tinta);
-    border-radius: 4px;
+    border: none;
+    border-radius: 50px;
     background: var(--tinta);
     color: white;
     display: inline-flex;
     align-items: center;
-    padding: 13px 20px;
+    padding: 16px 26px;
     text-decoration: none;
     font-size: .85rem;
-    transition: transform .2s, background .2s
+    font-weight: bold;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1), inset 0 -4px 8px rgba(0,0,0,0.15);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)
 }
 
 .btn:hover {
-    transform: translateY(-3px);
-    background: var(--verde)
+    transform: scale(1.06) translateY(-4px);
+    background: var(--verde);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.15), inset 0 -4px 8px rgba(0,0,0,0.1)
 }
 
 .secundario {
-    background: transparent;
+    background: var(--borde);
     color: var(--tinta)
 }
 
@@ -229,19 +237,21 @@ section {
     color: white
 }
 
+/* Póster central y esferas masivas */
 .poster {
     min-height: 550px;
     position: relative;
     overflow: hidden;
     background: #d4aa78;
-    border-radius: 48% 48% 3px 3px;
+    border-radius: 48% 48% 30px 30px;
+    box-shadow: inset 0 -20px 50px rgba(0,0,0,0.1);
     isolation: isolate
 }
 
 .orb {
     position: absolute;
     border-radius: 50%;
-    box-shadow: inset -25px -20px 40px #0003, 10px 20px 50px #0002;
+    box-shadow: inset -35px -35px 50px rgba(0,0,0,0.4), 15px 25px 55px rgba(0,0,0,0.25);
     transition: transform .4s
 }
 
@@ -295,7 +305,7 @@ section {
     position: absolute;
     right: 15px;
     top: 43%;
-    border: 1px solid #f4f0e7;
+    border: 1px solid #f4eedd;
     border-radius: 50%;
     padding: 20px 12px;
     color: white;
@@ -321,7 +331,7 @@ section {
     white-space: nowrap;
     overflow: hidden;
     background: var(--tinta);
-    color: #ddd9ca;
+    color: #dccfb9;
     letter-spacing: .23em;
     padding: 19px 0;
     font-size: .8rem
@@ -335,7 +345,7 @@ section {
 
 .aviso {
     font-size: .85rem;
-    border-left: 2px solid var(--rojo);
+    border-left: 3px solid var(--rojo);
     padding-left: 16px
 }
 
@@ -353,7 +363,8 @@ section {
 
 .pilares span {
     font-size: .8rem;
-    color: var(--rojo)
+    color: var(--rojo);
+    font-weight: bold;
 }
 
 .pilares h3 {
@@ -374,14 +385,24 @@ section {
     flex-wrap: wrap
 }
 
+/* Filtros y etapas inflados */
 .filtros button,
 .etapas button {
-    padding: 10px 16px;
-    border: 1px solid var(--borde);
-    border-radius: 30px;
+    padding: 16px 26px;
+    border: none;
+    border-radius: 50px;
     background: transparent;
     color: inherit;
-    font-size: .8rem
+    font-size: .8rem;
+    font-weight: bold;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1), inset 0 -4px 8px rgba(0,0,0,0.15);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+}
+
+.filtros button:hover,
+.etapas button:hover {
+    transform: scale(1.06) translateY(-4px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.15), inset 0 -4px 8px rgba(0,0,0,0.1)
 }
 
 .filtros .activo {
@@ -390,7 +411,7 @@ section {
 }
 
 .buscar {
-    border-bottom: 1px solid var(--borde);
+    border-bottom: 2px solid var(--borde);
     padding: 8px
 }
 
@@ -407,14 +428,22 @@ section {
     gap: 30px 22px
 }
 
+/* Fichas de obras redondas y con rebote */
 .obra {
     display: block;
     width: 100%;
     text-align: left;
     border: 0;
-    background: transparent;
+    background: white;
     color: inherit;
-    padding: 0
+    padding: 20px;
+    border-radius: 35px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+}
+
+.obra:hover {
+    transform: scale(1.04) translateY(-5px)
 }
 
 .miniatura {
@@ -422,7 +451,8 @@ section {
     overflow: hidden;
     position: relative;
     background: var(--c);
-    border-radius: 3px
+    border-radius: 20px;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.15)
 }
 
 .miniatura:after {
@@ -434,9 +464,9 @@ section {
     background: #ffffff24;
     left: 18%;
     top: 22%;
-    box-shadow: inset -20px -25px 30px #0002;
+    box-shadow: inset -25px -35px 40px rgba(0,0,0,0.35);
     transform: rotate(var(--rot));
-    transition: transform .4s
+    transition: transform .4s cubic-bezier(0.175, 0.885, 0.32, 1.275)
 }
 
 .obra:hover .miniatura:after {
@@ -448,7 +478,8 @@ section {
     top: 18px;
     left: 18px;
     color: #fff;
-    font-size: .8rem
+    font-size: .8rem;
+    font-weight: bold;
 }
 
 .placeholder {
@@ -491,10 +522,6 @@ section {
     margin: 30px 0
 }
 
-.etapas button {
-    border-color: #ffffff40
-}
-
 .etapas .activo {
     background: #e1b789;
     color: var(--tinta)
@@ -530,6 +557,7 @@ details:last-child {
 
 summary {
     font: 1.7rem Georgia, serif;
+    font-weight: 700;
     cursor: pointer;
     list-style: none;
     display: flex;
@@ -545,7 +573,7 @@ details p {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 50px;
-    background: #e6e5d8
+    background: #e6e0cc
 }
 
 .sonido p {
@@ -577,7 +605,7 @@ details p {
 }
 
 .visualizador i {
-    width: 9px;
+    width: 12px;
     height: 30px;
     background: var(--verde);
     border-radius: 20px;
@@ -615,7 +643,8 @@ details p {
     border: 0;
     background: transparent;
     text-decoration: underline;
-    color: var(--tinta)
+    color: var(--tinta);
+    font-weight: bold;
 }
 
 .avance {
@@ -628,7 +657,18 @@ details p {
 progress {
     accent-color: var(--verde);
     width: min(400px, 55%);
-    height: 10px
+    height: 14px;
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-bar {
+    background-color: var(--borde);
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+    background-color: var(--verde);
+    border-radius: 10px;
 }
 
 .tareas {
@@ -637,20 +677,29 @@ progress {
     gap: 12px
 }
 
+/* Tareas más gorditas */
 .tarea {
     display: flex;
     gap: 15px;
     align-items: flex-start;
-    padding: 20px;
-    border: 1px solid var(--borde);
-    border-radius: 5px
+    padding: 25px;
+    border: 2px solid var(--borde);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    transition: transform 0.2s
+}
+
+.tarea:hover {
+    transform: scale(1.02)
 }
 
 .tarea input {
     accent-color: var(--verde);
     margin-top: 5px;
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
     flex-shrink: 0
 }
 
@@ -660,12 +709,13 @@ progress {
 
 .tarea strong {
     display: block;
-    font-weight: 500;
-    font-size: 1rem
+    font-weight: 700;
+    font-size: 1.1rem
 }
 
 .tarea:has(input:checked) {
-    background: #dce6d8
+    background: #dce6d8;
+    border-color: var(--verde);
 }
 
 .equipo {
@@ -682,7 +732,8 @@ progress {
 
 .equipo span {
     font-size: .65rem;
-    letter-spacing: .1em
+    letter-spacing: .1em;
+    font-weight: bold;
 }
 
 .equipo h3 {
@@ -709,6 +760,7 @@ footer p {
     margin-top: 15px
 }
 
+/* Reproductor robusto */
 .player {
     position: fixed;
     bottom: 18px;
@@ -718,12 +770,12 @@ footer p {
     display: flex;
     gap: 15px;
     align-items: center;
-    background: #182c29f5;
+    background: #2a1f1bf5;
     color: white;
-    padding: 12px 20px;
+    padding: 15px 25px;
     border: 1px solid #ffffff30;
-    border-radius: 50px;
-    box-shadow: 0 10px 40px #0003;
+    border-radius: 60px;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.4);
     max-width: 95vw;
     width: 510px
 }
@@ -733,9 +785,15 @@ footer p {
     background: #e1b789;
     color: var(--tinta);
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.player button:hover {
+    transform: scale(1.1);
 }
 
 .player div {
@@ -745,12 +803,13 @@ footer p {
 
 .player span {
     font-size: .8rem;
-    display: block
+    display: block;
+    font-weight: bold;
 }
 
 .player small {
     display: block;
-    font-size: .62rem;
+    font-size: .65rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -760,7 +819,8 @@ footer p {
 .player label {
     font-size: .6rem;
     display: grid;
-    gap: 3px
+    gap: 3px;
+    font-weight: bold;
 }
 
 .player input {
@@ -768,16 +828,18 @@ footer p {
     accent-color: #e1b789
 }
 
+/* Modal inflado */
 dialog {
     border: 0;
-    border-radius: 12px;
+    border-radius: 40px;
     max-width: 650px;
     width: 90%;
     max-height: 85vh;
     overflow: auto;
     padding: 45px;
     background: var(--fondo);
-    color: var(--tinta)
+    color: var(--tinta);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5)
 }
 
 dialog::backdrop {
@@ -798,8 +860,21 @@ dialog li {
     top: 14px;
     right: 15px;
     border: 0;
-    background: transparent;
-    font-size: 1.4rem
+    background: var(--borde);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.cerrar:hover {
+    transform: scale(1.1);
+    background: var(--rojo);
+    color: white;
 }
 
 .reveal {
@@ -858,16 +933,18 @@ dialog li {
     }
 
     header {
-        padding: 15px 6%
+        padding: 15px 6%;
+        border-radius: 0 0 20px 20px;
     }
 
     #menu {
         display: block;
         background: transparent;
-        border: 1px solid var(--borde);
-        padding: 5px 12px;
+        border: 2px solid var(--borde);
+        padding: 8px 16px;
+        font-weight: bold;
         color: var(--tinta);
-        border-radius: 4px
+        border-radius: 20px;
     }
 
     nav {
@@ -878,8 +955,9 @@ dialog li {
         right: 0;
         background: var(--fondo);
         padding: 20px 6%;
-        border-bottom: 1px solid var(--borde);
-        flex-direction: column
+        border-bottom: 2px solid var(--borde);
+        flex-direction: column;
+        border-radius: 0 0 20px 20px;
     }
 
     nav.abierto {
@@ -939,7 +1017,8 @@ dialog li {
 
     .player {
         gap: 9px;
-        padding: 10px 12px
+        padding: 10px 15px;
+        border-radius: 40px;
     }
 
     .player label input {
@@ -947,7 +1026,8 @@ dialog li {
     }
 
     dialog {
-        padding: 40px 22px
+        padding: 40px 22px;
+        border-radius: 25px;
     }
 
     .equipo h3 {
