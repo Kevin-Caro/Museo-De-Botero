@@ -1,6 +1,6 @@
 "use strict";
 const $ = (s) => document.querySelector(s);
-const colores = ["#b65e40", "#536b51", "#b18e59", "#69736a", "#8b634e"];
+const colores = ["#e0704a", "#5aa67f", "#f0bb52", "#ee9a97", "#5aa3ba"];
 const obras = Array.from({ length: 15 }, (_, i) => ({
   id: i + 1,
   tipo: i < 10 ? "museo" : "debate",
@@ -90,45 +90,6 @@ document.querySelectorAll("[data-etapa]").forEach((b) =>
     });
   }),
 );
-const tareas = [
-  ["Selección inicial", "10 obras del museo y 5 externas o casos de debate."],
-  [
-    "Investigación base",
-    "Biografía, etapas de la carrera y origen del Museo Botero.",
-  ],
-  ["Banco de imágenes", "Imágenes iniciales, datos y registro de procedencia."],
-  ["Propuesta musical", "Estilo, autores, géneros y posibles pistas."],
-  ["Boceto de la web", "Secciones, navegación, colores y tipografía."],
-  [
-    "Revisión conjunta",
-    "Contrastar fuentes y revisar la coherencia del proyecto.",
-  ],
-];
-let checks = [];
-try {
-  const saved = JSON.parse(localStorage.getItem("botero-semana1") || "[]");
-  if (Array.isArray(saved)) checks = saved;
-} catch {}
-$("#tareas").innerHTML = tareas
-  .map(
-    (t, i) =>
-      `<label class="tarea"><input type="checkbox" data-tarea="${i}" ${checks[i] === true ? "checked" : ""}><span><strong>${t[0]}</strong>${t[1]}</span></label>`,
-  )
-  .join("");
-function actualizar() {
-  const items = [...document.querySelectorAll("[data-tarea]")].map(
-    (x) => x.checked,
-  );
-  const n = items.filter(Boolean).length;
-  $("#avance").value = n;
-  $("#avanceTexto").textContent =
-    `${n} de 6 tareas · ${Math.round((n / 6) * 100)} %`;
-  try {
-    localStorage.setItem("botero-semana1", JSON.stringify(items));
-  } catch {}
-}
-actualizar();
-$("#tareas").addEventListener("change", actualizar);
 $("#menu").addEventListener("click", () => {
   const open = $("#nav").classList.toggle("abierto");
   $("#menu").setAttribute("aria-expanded", String(open));
@@ -328,4 +289,101 @@ audio.addEventListener("pause", () => {
     playing = false;
     ui();
   }
+});
+
+const guiaMsgs = {
+  inicio: "¡Hola! Soy Chela. Te acompaño por el recorrido.",
+  proyecto: "La idea es simple: mirar, comprender y cuestionar.",
+  galeria: "Toca una ficha y te muestro qué falta investigar.",
+  mirar: "Toca una tarjeta y te doy una pregunta para mirar mejor.",
+  trayectoria: "Elige un eje para ver sus preguntas de investigación.",
+  laboratorio: "Infla la figura y mira qué detalles se quedan pequeños.",
+  debate: "Abre cada caso. Aquí investigamos antes de opinar.",
+  sonido: "Dale play al ambiente o carga tu propia música.",
+  libreta: "Anota lo que notaste. Se queda en tu navegador.",
+  equipo: "Ellos son las cuatro personas detrás del proyecto.",
+  fuentes: "Citar bien también es parte del trabajo.",
+};
+const guia = $(".guia");
+function guiaDice(t) {
+  $("#guiaMsg").textContent = t;
+  guia.classList.remove("habla");
+  void guia.offsetWidth;
+  guia.classList.add("habla");
+}
+function guiaDi(id) {
+  if (guiaMsgs[id]) guiaDice(guiaMsgs[id]);
+}
+guiaDi("inicio");
+$("#guiaBtn").addEventListener("click", () => {
+  const callada = guia.classList.toggle("callada");
+  $("#guiaBtn").setAttribute("aria-expanded", String(!callada));
+});
+if ("IntersectionObserver" in window) {
+  const obsGuia = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((e) => e.isIntersecting && guiaDi(e.target.id)),
+    { rootMargin: "-45% 0px -50% 0px" },
+  );
+  document
+    .querySelectorAll("main > section[id]")
+    .forEach((s) => obsGuia.observe(s));
+}
+document
+  .querySelectorAll(".mirar")
+  .forEach((b) =>
+    b.addEventListener("click", () =>
+      b.setAttribute(
+        "aria-pressed",
+        String(b.getAttribute("aria-pressed") !== "true"),
+      ),
+    ),
+  );
+const infla = $("#infla"),
+  stage = $("#labStage");
+infla.addEventListener("input", () => {
+  const v = Number(infla.value);
+  stage.style.setProperty("--inf", v);
+  $("#inflaVal").textContent = `${Math.round(v * 100)} %`;
+});
+infla.addEventListener("change", () => {
+  const v = Number(infla.value);
+  if (v >= 1.5)
+    guiaDice("¡Eso sí es volumen! Mira lo pequeñas que quedaron las manos.");
+  else if (v <= 0.7) guiaDice("Muy delgada. ¡Vuelve a inflarla!");
+});
+document.querySelectorAll("[data-vestido]").forEach((b) =>
+  b.addEventListener("click", () => {
+    stage.style.setProperty("--vestido", b.dataset.vestido);
+    document
+      .querySelectorAll("[data-vestido]")
+      .forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    guiaDice(`${b.getAttribute("aria-label")}: buena elección.`);
+  }),
+);
+const libreta = $("#nota");
+try {
+  libreta.value = localStorage.getItem("botero-libreta") || "";
+} catch {}
+function contar() {
+  $("#notaCuenta").textContent = `${libreta.value.length} caracteres`;
+  try {
+    localStorage.setItem("botero-libreta", libreta.value);
+  } catch {}
+}
+contar();
+libreta.addEventListener("input", contar);
+document.querySelectorAll("[data-pregunta]").forEach((b) =>
+  b.addEventListener("click", () => {
+    libreta.value +=
+      (libreta.value && !libreta.value.endsWith("\n") ? "\n" : "") +
+      b.dataset.pregunta +
+      "\n";
+    libreta.focus();
+    contar();
+  }),
+);
+$("#notaBorrar").addEventListener("click", () => {
+  libreta.value = "";
+  contar();
 });
