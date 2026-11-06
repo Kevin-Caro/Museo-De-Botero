@@ -2459,3 +2459,4 @@ footer p {
 main>section[data-sala]:not(.hero):after{display:none}
 main>section[data-sala]:not(.hero){padding-bottom:60px}
 .sala:after{display:none}
+.hero:after{display:none}
