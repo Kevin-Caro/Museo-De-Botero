@@ -7,7 +7,7 @@ const obras = Array.from({ length: 15 }, (_, i) => ({
   titulo:
     i < 10
       ? `Obra del museo · ${String(i + 1).padStart(2, "0")}`
-      : `Obra externa · ${String(i - 9).padStart(2, "0")}`,
+      : `Obra externa · ${String(i - 9).padStart(2, "0")}`, 
 }));
 let filtro = "todos",
   lista = [],
