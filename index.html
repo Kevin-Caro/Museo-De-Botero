@@ -29,9 +29,10 @@
         ><a href="#mirar">Mirar</a><a href="#trayectoria">Trayectoria</a
         ><a href="#laboratorio">Laboratorio</a><a href="#debate">Debate</a>
       </nav>
+      <button id="plano" type="button" aria-haspopup="dialog">▦ Plano</button>
     </header>
     <main id="contenido">
-      <section class="hero" id="inicio">
+      <section class="hero" id="inicio" data-sala="Entrada">
         <div class="hero-copy">
           <p class="eyebrow">ARTE · MEMORIA · PREGUNTAS</p>
           <h1>Más allá<br />del <em>volumen.</em></h1>
@@ -57,16 +58,20 @@
           ><span class="poster-bottom">La forma es solo<br />el comienzo.</span
           ><span class="sello">MÁS ALLÁ<br />DE BOTERO</span>
         </div>
+        <div class="boleto" aria-hidden="true">
+          <b>BOLETO · ENTRADA LIBRE</b
+          ><span>Recorrido por 10 salas · Más allá de Botero</span>
+        </div>
         <div class="hero-footer">
           <span>15 obras por investigar</span><span>01 recorrido digital</span
-          ><a href="#proyecto">Desliza para descubrir ↓</a>
+          ><a href="#proyecto">Entrar a la Sala 01 →</a>
         </div>
       </section>
       <div class="cinta" aria-hidden="true">
         FORMA / CONTEXTO / MEMORIA / EXPRESIÓN / FORMA / CONTEXTO / MEMORIA /
         EXPRESIÓN
       </div>
-      <section id="proyecto" class="reveal">
+      <section id="proyecto" data-sala="Sala 01 · El proyecto" class="">
         <div class="cabecera">
           <p class="eyebrow">EL PROYECTO</p>
           <h2>No solo mirar.<br /><em>Aprender a preguntar.</em></h2>
@@ -107,12 +112,13 @@
           </article>
         </div>
       </section>
-      <section id="galeria" class="reveal">
+      <section id="galeria" data-sala="Sala 02 · Galería principal" class="">
         <div class="cabecera">
           <p class="eyebrow">GALERÍA EN CONSTRUCCIÓN</p>
           <h2>Quince entradas.<br /><em>Muchas preguntas.</em></h2>
           <p>
-            Explora las fichas para conocer qué falta investigar en cada una.
+            Recorre la sala: arrastra, usa las flechas o el deslizador. Toca la
+            obra del centro para abrir su ficha.
           </p>
         </div>
         <div class="herramientas">
@@ -134,9 +140,45 @@
           /></label>
         </div>
         <p id="resultados" class="muted" aria-live="polite"></p>
-        <div id="obras" class="obras"></div>
+        <div class="sala" id="sala">
+          <div
+            id="obras"
+            class="escena"
+            role="group"
+            aria-label="Sala de obras"
+          ></div>
+        </div>
+        <div class="sala-ctl">
+          <button
+            class="btn secundario"
+            id="prev"
+            type="button"
+            aria-label="Obra anterior"
+          >
+            ←
+          </button>
+          <div class="scrub">
+            <output id="contador">01 / 15</output
+            ><input
+              type="range"
+              id="scrub"
+              min="0"
+              max="14"
+              value="0"
+              aria-label="Recorrer obras"
+            />
+          </div>
+          <button
+            class="btn secundario"
+            id="next"
+            type="button"
+            aria-label="Obra siguiente"
+          >
+            →
+          </button>
+        </div>
       </section>
-      <section id="mirar" class="reveal">
+      <section id="mirar" data-sala="Sala 03 · Cómo mirar" class="">
         <p class="eyebrow">CÓMO MIRAR</p>
         <h2>Cuatro preguntas<br /><em>para cada obra.</em></h2>
         <p class="ancho">
@@ -180,7 +222,11 @@
           </button>
         </div>
       </section>
-      <section id="trayectoria" class="oscuro reveal">
+      <section
+        id="trayectoria"
+        data-sala="Sala 04 · Trayectoria"
+        class="oscuro"
+      >
         <p class="eyebrow">MAPA DE INVESTIGACIÓN</p>
         <h2>Un estilo no aparece<br /><em>de un día para otro.</em></h2>
         <p>
@@ -197,7 +243,7 @@
         </div>
         <article id="etapaTexto" class="etapa" aria-live="polite"></article>
       </section>
-      <section id="laboratorio" class="reveal">
+      <section id="laboratorio" data-sala="Sala 05 · Laboratorio" class="">
         <div class="lab">
           <div>
             <p class="eyebrow">LABORATORIO DE VOLUMEN</p>
@@ -268,7 +314,7 @@
           </div>
         </div>
       </section>
-      <section id="debate" class="reveal">
+      <section id="debate" data-sala="Sala 06 · El arte incomoda" class="">
         <p class="eyebrow">EL ARTE TAMBIÉN INCOMODA</p>
         <h2>¿Representar es<br /><em>justificar?</em></h2>
         <p class="ancho">
@@ -302,7 +348,7 @@
           </details>
         </div>
       </section>
-      <section id="sonido" class="sonido reveal">
+      <section id="sonido" data-sala="Sala 07 · Sala sonora" class="sonido">
         <div>
           <p class="eyebrow">PAISAJE SONORO</p>
           <h2>Otra forma<br />de <em>recorrer.</em></h2>
@@ -331,7 +377,7 @@
           ><i></i>
         </div>
       </section>
-      <section id="libreta" class="reveal">
+      <section id="libreta" data-sala="Sala 08 · Libreta" class="">
         <p class="eyebrow">TU LIBRETA</p>
         <h2>Anota lo que <em>notaste.</em></h2>
         <p class="ancho">
@@ -370,7 +416,7 @@
           </div>
         </div>
       </section>
-      <section id="equipo" class="reveal">
+      <section id="equipo" data-sala="Sala 09 · Equipo" class="">
         <p class="eyebrow">EQUIPO</p>
         <h2>Cuatro miradas.<br /><em>Una historia.</em></h2>
         <div class="equipo">
@@ -392,7 +438,7 @@
           </article>
         </div>
       </section>
-      <section id="fuentes" class="fuentes reveal">
+      <section id="fuentes" data-sala="Sala 10 · Fuentes" class="fuentes">
         <p class="eyebrow">FUENTES Y CRÉDITOS</p>
         <h2>Investigar también es <em>citar.</em></h2>
         <p>
@@ -409,7 +455,10 @@
     </main>
     <footer>
       <a class="marca" href="#inicio">Más allá de Botero ↗</a>
-      <p>Prototipo académico · Contenido en investigación</p>
+      <p>
+        Salida del museo · Gracias por la visita · Prototipo académico ·
+        Contenido en investigación
+      </p>
     </footer>
     <aside class="player" aria-label="Reproductor de música">
       <button id="play" aria-label="Reproducir ambiente">▶</button>
@@ -429,14 +478,17 @@
     </aside>
     <aside class="guia" aria-label="Guía del recorrido">
       <div class="guia-burbuja" id="guiaTexto">
-        <b>Chela, tu guía</b><span id="guiaMsg"></span>
+        <b>Chela, guía del museo</b><span id="guiaMsg"></span
+        ><button class="guia-sig" id="guiaSig" type="button">
+          Siguiente sala →
+        </button>
       </div>
       <button
         class="guia-btn"
         id="guiaBtn"
         aria-expanded="true"
         aria-controls="guiaTexto"
-        aria-label="Mostrar u ocultar el mensaje de Chela, tu guía"
+        aria-label="Mostrar u ocultar el mensaje de Chela, guía del museo"
       >
         <svg viewBox="0 0 140 170" aria-hidden="true">
           <defs>
@@ -482,6 +534,14 @@
       </button>
     </aside>
     <audio id="audio" loop></audio>
+    <dialog id="mapa">
+      <button id="cerrarMapa" class="cerrar" aria-label="Cerrar plano">
+        ✕
+      </button>
+      <h2>Plano del museo</h2>
+      <p>Estás en: <b id="aqui">Entrada</b>. Toca una sala para ir.</p>
+      <div class="plano" id="planoGrid"></div>
+    </dialog>
     <dialog id="ficha">
       <button id="cerrar" class="cerrar" aria-label="Cerrar ficha">✕</button>
       <div id="fichaContenido"></div>
