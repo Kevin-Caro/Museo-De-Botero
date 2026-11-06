@@ -9,27 +9,58 @@ const obras = Array.from({ length: 15 }, (_, i) => ({
       ? `Obra del museo · ${String(i + 1).padStart(2, "0")}`
       : `Obra externa · ${String(i - 9).padStart(2, "0")}`,
 }));
-let filtro = "todos";
+let filtro = "todos",
+  lista = [],
+  cur = 0,
+  arrastre = false;
+function pinta(o) {
+  return `<div class="miniatura" style="--c:${colores[(o.id - 1) % 5]};--f:${colores[(o.id + 1) % 5]};--rot:${o.id % 2 ? "-20deg" : "20deg"}"><span class="num">${String(o.id).padStart(2, "0")} / 15</span><i class="fruta"></i><span class="placeholder">ILUSTRACIÓN · NO ES UNA OBRA</span></div>`;
+}
 function render() {
   const termino = $("#busqueda").value.trim().toLowerCase();
-  const lista = obras.filter(
+  lista = obras.filter(
     (o) =>
       (filtro === "todos" || o.tipo === filtro) &&
       o.titulo.toLowerCase().includes(termino),
   );
+  cur = Math.min(cur, Math.max(lista.length - 1, 0));
   $("#obras").innerHTML = lista
     .map(
       (o) =>
-        `<button class="obra" data-obra="${o.id}" aria-label="Abrir ficha: ${o.titulo}"><div class="miniatura" style="--c:${colores[(o.id - 1) % 5]};--rot:${o.id % 2 ? "-20deg" : "20deg"}"><span class="num">${String(o.id).padStart(2, "0")} / 15</span><span class="placeholder">ILUSTRACIÓN · NO ES UNA OBRA</span></div><h3>${o.titulo} ↗</h3><p>Por seleccionar · ${o.tipo === "museo" ? "Museo Botero" : "Obra externa o caso de debate"}</p></button>`,
+        `<button class="obra" data-obra="${o.id}" aria-label="Abrir ficha: ${o.titulo}">${pinta(o)}<h3>${o.titulo} ↗</h3><p>Por seleccionar · ${o.tipo === "museo" ? "Museo Botero" : "Obra externa o caso de debate"}</p></button>`,
     )
     .join("");
+  $("#scrub").max = Math.max(lista.length - 1, 0);
   $("#resultados").textContent =
     `${lista.length} fichas visibles · Títulos y datos pendientes de investigación`;
+  coloca();
+}
+function coloca() {
+  [...$("#obras").children].forEach((c, i) => {
+    const o = i - cur,
+      a = Math.abs(o);
+    c.style.setProperty("--o", o);
+    c.style.setProperty("--a", a);
+    c.style.zIndex = 20 - a;
+    c.classList.toggle("lejos", a > 2);
+    c.classList.toggle("centro", a === 0);
+    c.tabIndex = a === 0 ? 0 : -1;
+  });
+  $("#scrub").value = cur;
+  $("#contador").textContent = lista.length
+    ? `${String(cur + 1).padStart(2, "0")} / ${String(lista.length).padStart(2, "0")}`
+    : "0 / 0";
+}
+function mover(d) {
+  if (!lista.length) return;
+  cur = Math.max(0, Math.min(lista.length - 1, cur + d));
+  coloca();
 }
 render();
 document.querySelectorAll("[data-filter]").forEach((b) =>
   b.addEventListener("click", () => {
     filtro = b.dataset.filter;
+    cur = 0;
     document.querySelectorAll("[data-filter]").forEach((x) => {
       x.classList.toggle("activo", x === b);
       x.setAttribute("aria-pressed", String(x === b));
@@ -37,14 +68,55 @@ document.querySelectorAll("[data-filter]").forEach((b) =>
     render();
   }),
 );
-$("#busqueda").addEventListener("input", render);
+$("#busqueda").addEventListener("input", () => {
+  cur = 0;
+  render();
+});
+function abrirFicha(o) {
+  $("#fichaContenido").innerHTML =
+    `<div class="ficha-cuadro">${pinta(o)}</div><p class="eyebrow">FICHA DE INVESTIGACIÓN / ${String(o.id).padStart(2, "0")}</p><h2>${o.titulo}</h2><p class="aviso">Este espacio no representa una obra identificada. Reemplazarlo tras verificar la selección.</p><h3>Información por reunir</h3><ul>${(o.tipo === "museo" ? ["Título, año y técnica.", "Confirmar su pertenencia al recorrido del Museo Botero.", "Contexto histórico y significado, con fuentes.", "Relación con la evolución del estilo.", "Imagen, procedencia y permiso de uso.", "Propuesta musical y justificación."] : ["Título, año, técnica y ubicación.", "Fuentes sobre su contexto y recepción.", "Distinguir controversia documentada de censura.", "Reacciones identificadas: quién, cuándo y dónde.", "Pregunta de reflexión, imagen y permisos.", "Propuesta musical y justificación."]).map((x) => `<li>${x}</li>`).join("")}</ul><div class="ficha-nav"><button class="btn secundario" data-ir="-1">← Anterior</button><button class="btn secundario" data-ir="1">Siguiente →</button></div>`;
+  if (!$("#ficha").open) $("#ficha").showModal();
+}
 $("#obras").addEventListener("click", (e) => {
+  if (arrastre) return;
   const b = e.target.closest("[data-obra]");
   if (!b) return;
-  const o = obras.find((x) => x.id === Number(b.dataset.obra));
-  $("#fichaContenido").innerHTML =
-    `<p class="eyebrow">FICHA DE INVESTIGACIÓN / ${String(o.id).padStart(2, "0")}</p><h2>${o.titulo}</h2><p class="aviso">Este espacio no representa una obra identificada. Reemplazarlo tras verificar la selección.</p><h3>Información por reunir</h3><ul>${(o.tipo === "museo" ? ["Título, año y técnica.", "Confirmar su pertenencia al recorrido del Museo Botero.", "Contexto histórico y significado, con fuentes.", "Relación con la evolución del estilo.", "Imagen, procedencia y permiso de uso.", "Propuesta musical y justificación."] : ["Título, año, técnica y ubicación.", "Fuentes sobre su contexto y recepción.", "Distinguir controversia documentada de censura.", "Reacciones identificadas: quién, cuándo y dónde.", "Pregunta de reflexión, imagen y permisos.", "Propuesta musical y justificación."]).map((x) => `<li>${x}</li>`).join("")}</ul>`;
-  $("#ficha").showModal();
+  const i = [...$("#obras").children].indexOf(b);
+  if (i !== cur) {
+    cur = i;
+    coloca();
+    return;
+  }
+  abrirFicha(lista[cur]);
+});
+$("#fichaContenido").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-ir]");
+  if (!b) return;
+  mover(Number(b.dataset.ir));
+  abrirFicha(lista[cur]);
+});
+$("#prev").addEventListener("click", () => mover(-1));
+$("#next").addEventListener("click", () => mover(1));
+$("#scrub").addEventListener("input", (e) => {
+  cur = Number(e.target.value);
+  coloca();
+});
+let x0 = null;
+$("#sala").addEventListener("pointerdown", (e) => {
+  x0 = e.clientX;
+});
+$("#sala").addEventListener("pointercancel", () => {
+  x0 = null;
+});
+$("#sala").addEventListener("pointerup", (e) => {
+  if (x0 === null) return;
+  const dx = e.clientX - x0;
+  x0 = null;
+  if (Math.abs(dx) > 50) {
+    arrastre = true;
+    mover(dx < 0 ? 1 : -1);
+    setTimeout(() => (arrastre = false), 60);
+  }
 });
 $("#cerrar").addEventListener("click", () => $("#ficha").close());
 $("#ficha").addEventListener("click", (e) => {
@@ -117,10 +189,7 @@ if ("IntersectionObserver" in window) {
     observer.observe(e);
   });
 }
-function scrollProgress() {
-  const max = document.documentElement.scrollHeight - innerHeight;
-  $("#progreso").style.width = `${max > 0 ? (scrollY / max) * 100 : 0}%`;
-}
+function scrollProgress() {}
 addEventListener("scroll", scrollProgress, { passive: true });
 addEventListener("resize", scrollProgress);
 scrollProgress();
@@ -292,9 +361,9 @@ audio.addEventListener("pause", () => {
 });
 
 const guiaMsgs = {
-  inicio: "¡Hola! Soy Chela. Te acompaño por el recorrido.",
+  inicio: "¡Bienvenido al museo! Soy Chela, tu guía. Entremos.",
   proyecto: "La idea es simple: mirar, comprender y cuestionar.",
-  galeria: "Toca una ficha y te muestro qué falta investigar.",
+  galeria: "Esta es la sala principal. Recorre los cuadros.",
   mirar: "Toca una tarjeta y te doy una pregunta para mirar mejor.",
   trayectoria: "Elige un eje para ver sus preguntas de investigación.",
   laboratorio: "Infla la figura y mira qué detalles se quedan pequeños.",
@@ -304,6 +373,57 @@ const guiaMsgs = {
   equipo: "Ellos son las cuatro personas detrás del proyecto.",
   fuentes: "Citar bien también es parte del trabajo.",
 };
+const ids = [...document.querySelectorAll("main > section[id]")].map(
+  (s) => s.id,
+);
+const nombres = {
+  inicio: "Inicio",
+  proyecto: "Proyecto",
+  galeria: "Galería",
+  mirar: "Mirar",
+  trayectoria: "Trayectoria",
+  laboratorio: "Laboratorio",
+  debate: "Debate",
+  sonido: "Sonido",
+  libreta: "Libreta",
+  equipo: "Equipo",
+  fuentes: "Fuentes",
+};
+const rail = document.createElement("nav");
+rail.className = "rail";
+rail.setAttribute("aria-label", "Secciones");
+rail.innerHTML = ids
+  .map(
+    (id) =>
+      `<a href="#${id}" aria-label="${nombres[id] || id}"><span>${nombres[id] || id}</span></a>`,
+  )
+  .join("");
+document.body.appendChild(rail);
+let actual = "inicio";
+function marca(id) {
+  actual = id;
+  $("#aqui").textContent = nombres[id] || id;
+  document.querySelectorAll("#nav a,.rail a,.cuarto").forEach((a) => {
+    const on = a.getAttribute("href") === "#" + id;
+    a.classList.toggle("actual", on);
+    on
+      ? a.setAttribute("aria-current", "true")
+      : a.removeAttribute("aria-current");
+  });
+}
+let ult = 0;
+addEventListener(
+  "scroll",
+  () => {
+    const y = scrollY;
+    $("header").classList.toggle(
+      "oculto",
+      y > ult && y > 400 && !$("#nav").classList.contains("abierto"),
+    );
+    ult = y;
+  },
+  { passive: true },
+);
 const guia = $(".guia");
 function guiaDice(t) {
   $("#guiaMsg").textContent = t;
@@ -319,16 +439,6 @@ $("#guiaBtn").addEventListener("click", () => {
   const callada = guia.classList.toggle("callada");
   $("#guiaBtn").setAttribute("aria-expanded", String(!callada));
 });
-if ("IntersectionObserver" in window) {
-  const obsGuia = new IntersectionObserver(
-    (entries) =>
-      entries.forEach((e) => e.isIntersecting && guiaDi(e.target.id)),
-    { rootMargin: "-45% 0px -50% 0px" },
-  );
-  document
-    .querySelectorAll("main > section[id]")
-    .forEach((s) => obsGuia.observe(s));
-}
 document
   .querySelectorAll(".mirar")
   .forEach((b) =>
@@ -387,3 +497,116 @@ $("#notaBorrar").addEventListener("click", () => {
   libreta.value = "";
   contar();
 });
+if (
+  matchMedia("(hover:hover) and (prefers-reduced-motion:no-preference)").matches
+) {
+  document.querySelectorAll(".pilares article,.equipo article").forEach((c) => {
+    c.classList.add("tilt");
+    c.addEventListener("pointermove", (e) => {
+      const r = c.getBoundingClientRect();
+      c.style.setProperty(
+        "--ry",
+        ((e.clientX - r.left) / r.width - 0.5) * 14 + "deg",
+      );
+      c.style.setProperty(
+        "--rx",
+        (0.5 - (e.clientY - r.top) / r.height) * 14 + "deg",
+      );
+    });
+    c.addEventListener("pointerleave", () => {
+      c.style.setProperty("--rx", "0deg");
+      c.style.setProperty("--ry", "0deg");
+    });
+  });
+  const p = $(".poster");
+  p.addEventListener("pointermove", (e) => {
+    const r = p.getBoundingClientRect();
+    p.style.setProperty("--px", (e.clientX - r.left) / r.width - 0.5);
+    p.style.setProperty("--py", (e.clientY - r.top) / r.height - 0.5);
+  });
+}
+$("#planoGrid").innerHTML = ids
+  .map(
+    (id, i) =>
+      `<a class="cuarto c${i}" href="#${id}"><small>${i ? "Sala " + String(i).padStart(2, "0") : "Entrada"}</small>${nombres[id] || id}</a>`,
+  )
+  .join("");
+marca(actual);
+$("#plano").addEventListener("click", () => $("#mapa").showModal());
+$("#cerrarMapa").addEventListener("click", () => $("#mapa").close());
+$("#planoGrid").addEventListener("click", (e) => {
+  if (e.target.closest("a")) $("#mapa").close();
+});
+
+/* ---- Recorrido por salas ---- */
+let cuarto = 0;
+const museo = document.querySelector("main");
+museo.addEventListener("scroll", () => {
+  museo.scrollTop = 0;
+  museo.scrollLeft = 0;
+});
+const puertas = ["ant", "sig"].map((k) => {
+  const b = document.createElement("button");
+  b.className = "puerta " + k;
+  b.type = "button";
+  b.innerHTML = "<i></i><small></small>";
+  b.addEventListener("click", () => ir(ids[cuarto + (k === "sig" ? 1 : -1)]));
+  document.body.appendChild(b);
+  return b;
+});
+function ir(id, push = true) {
+  const i = ids.indexOf(id);
+  if (i < 0) return;
+  cuarto = i;
+  ids.forEach((s, k) => {
+    const el = document.getElementById(s),
+      d = k - i;
+    el.style.setProperty("--d", d);
+    el.style.setProperty("--ad", Math.min(Math.abs(d), 2));
+    el.inert = d !== 0;
+  });
+  document.getElementById(id).scrollTop = 0;
+  marca(id);
+  guiaDi(id);
+  $("#progreso").style.width = `${(i / (ids.length - 1)) * 100}%`;
+  [-1, 1].forEach((s, n) => {
+    const t = ids[i + s],
+      b = puertas[n];
+    b.hidden = !t;
+    if (t) {
+      b.querySelector("small").textContent = nombres[t];
+      b.setAttribute("aria-label", "Ir a la sala: " + nombres[t]);
+    }
+  });
+  if (push && location.hash !== "#" + id) history.pushState(null, "", "#" + id);
+}
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  const id = a.getAttribute("href").slice(1);
+  if (ids.includes(id)) {
+    e.preventDefault();
+    ir(id);
+  }
+});
+addEventListener("popstate", () =>
+  ir(location.hash.slice(1) || "inicio", false),
+);
+$("#guiaSig").addEventListener("click", () =>
+  ir(ids[Math.min(cuarto + 1, ids.length - 1)]),
+);
+document.addEventListener("keydown", (e) => {
+  if (
+    /INPUT|TEXTAREA/.test(e.target.tagName) ||
+    document.querySelector("dialog[open]")
+  )
+    return;
+  const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+  if (!d) return;
+  if (ids[cuarto] === "galeria" && !e.shiftKey) mover(d);
+  else ir(ids[cuarto + d]);
+});
+ir(
+  ids.includes(location.hash.slice(1)) ? location.hash.slice(1) : "inicio",
+  false,
+);
